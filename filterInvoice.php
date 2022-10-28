@@ -59,20 +59,51 @@ class FilterInvoice extends Module
      */
     public function install()
     {
-        Configuration::updateValue('FILTERINVOICE_LIVE_MODE', false);
-
         return parent::install() &&
             $this->registerHook('header') &&
+            $this->installTab() &&
             $this->registerHook('backOfficeHeader');
     }
 
     public function uninstall()
     {
-        Configuration::deleteByName('FILTERINVOICE_LIVE_MODE');
-
+        $this->uninstallTab();
         return parent::uninstall();
     }
 
+    private function installTab()
+    {
+        $tab = new Tab();
+        $tab->class_name = 'AdminInvoiceCustom';
+        $tab->module = $this->name;
+        $tab->id_parent = (int) Tab::getIdFromClassName('SELL');
+        $tab->icon = 'shopping_basket';
+        $tab->name = array();
+        foreach (Language::getLanguages() as $lang) {
+            $tab->name[$lang['id_lang']] = $this->trans('Facture avancé', array(), 'Modules.filterInvoice.Admin', $lang['locale']);
+        }
+        try {
+            $tab->save();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+        return true;
+    }
+    public function uninstallTab()
+    {
+        $tabId = Tab::getIdFromClassName('AdminInvoiceCustom');
+        if ($tabId) {
+            $tab = new Tab($tabId);
+            try {
+                $tab->delete();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Add the CSS & JavaScript files you want to be loaded in the BO.
      */
