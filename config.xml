@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>filterInvoice</name>
+	<displayName><![CDATA[Filtre factures]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Génère une liste de facture par date et par état]]></description>
+	<author><![CDATA[Valentin Duplan]]></author>
+	<tab><![CDATA[administration]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>
