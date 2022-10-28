@@ -25,3 +25,8 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
+.generate{
+    font-weight: 600 !important;
+    line-height: 2em !important;
+    padding: 0.375rem 0.838rem !important;
+}

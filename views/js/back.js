@@ -25,3 +25,40 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
+$(document).ready(function () {
+    //alert('test'); 
+    $('#customerSearch').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url : moduleAdminLink,
+                data :{
+                  ajax : true,
+                  valeur : request.term,
+                  dataType: "json",
+                  action : 'SearchCustomer',
+                },
+                success: function (d) {
+                    var res = JSON.parse(d);
+                    response($.map(res, function (value, key) {
+                        return {
+                            label: value.complete_name,
+                            value: value.complete_name,
+                            key: value.id_customer
+                        }
+                    }));
+                }
+            })
+        },
+        minLength: 3,
+        select: function (event, ui) {
+            console.log($(this).attr('data-id'));
+            $('input[name="customerId"]').val(ui.item.key);
+            $('#customerSearch' + $(this).attr('data-id')).attr("disabled", false);
+        },
+        change: function (event, ui) {
+            if (ui.item === null) {
+                $('input[name="customerId"]').val(0);
+            }
+          }
+    });
+});
