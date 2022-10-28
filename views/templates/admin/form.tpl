@@ -1,4 +1,3 @@
-<h1>tewt</h1>
 <div class="panel">
     <form id='module_form' method='POST' action='' validate class='defaultForm form-horizontal'>
         <div class="panel-heading">		
